@@ -1,6 +1,6 @@
 ## Getting Started
 
-Hi, this is my first "big project", it we made of Java, HTML, CSS, JS(Angular), SQL.
+Hi, this is my first "big project", it is made of Java, HTML, CSS, JS(Angular), SQL.
 
 ## Why
 
