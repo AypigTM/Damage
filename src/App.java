@@ -23,11 +23,7 @@ public class App {
         Tryndamere.add_item(Doranblade);
 
         Fight Fight = new Fight(Garen, Warwick);
-
-        Fight.auto_attack(Warwick, Garen);
-        Fight.garen_q(Warwick, Garen);
-        Fight.garen_e(Warwick, Garen);
-        Fight.garen_r(Warwick, Garen);
+        Fight.gold(7*60);
 
     }
 

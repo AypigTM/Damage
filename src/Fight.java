@@ -1,8 +1,8 @@
 public class Fight {
     Champ fighter1;
-    float fighter1_damage;
+    double fighter1_damage;
     Champ fighter2;
-    float fighter2_damage;
+    double fighter2_damage;
 
     public Fight(Champ fighter1, Champ fighter2) {
         this.fighter1 = fighter1;
@@ -25,26 +25,38 @@ public class Fight {
         this.fighter2 = x;
     }
 
-    public float getfighter1_damage() {
+    public double getfighter1_damage() {
         return fighter1_damage;
     }
 
-    public void setfighter1_damage(float x) {
+    public void setfighter1_damage(double x) {
         this.fighter1_damage = x;
     }
 
-    public float getfighter2_damage() {
+    public double getfighter2_damage() {
         return fighter2_damage;
     }
 
-    public void setfighter2_damage(float x) {
+    public void setfighter2_damage(double x) {
         this.fighter2_damage = x;
+    }
+
+    public void add_damage(Champ att, double x) {
+        if (this.fighter1 == att) {
+            this.fighter1_damage += x;
+        } else if (this.fighter2 == att) {
+            this.fighter2_damage += x;
+        } else {
+            System.out.println(
+                    "Big probleme mon reuf, add_damage ne reconnait pas le champion et ne peux actualiser les degats, just so u know");
+        }
     }
 
     public void auto_attack(Champ def, Champ att) {
         double damage = 0;
         damage = att.getad() * def.applyapen(def, att) * att.crit_multiplier();
         def.current_health -= Math.round(damage);
+        add_damage(att, damage);
         def.show();
     }
 
@@ -62,6 +74,7 @@ public class Fight {
             damage += (30 + att.getad() * 0.5) * def.applyapen(def, att);
         }
         def.current_health -= Math.round(damage);
+        add_damage(att, damage);
         System.out.println(def.show());
     }
 
@@ -93,6 +106,7 @@ public class Fight {
             }
         }
         def.current_health -= Math.round(damage);
+        add_damage(att, damage);
         System.out.println(def.show());
     }
 
@@ -122,10 +136,41 @@ public class Fight {
         }
     }
 
-    public void gold() {
-        float range = 15;
-        float mele = 20;
-        float canon = 40;
+    public void gold(double x) {
+        // x est le temps en seconde
+        double gold = 0;
+        double mele = 21;
+        double range = 14;
+        double canon = 60;
+        double xcanon = 60;
+        if (x > 110) {
+            gold += (x - 110) * 2.04;
+        }
+        if (x > 65) {
+            for (double i = 1; i <= Math.floor((x - 65) / 30); i++) {
+                double j = i % 3;
+                if (j == 1) {
+                    if (i > 5 && xcanon < 90){
+                        xcanon = xcanon + 3;
+                    }
+                }
+                    if(i < 51){
+                        gold += mele*3 + range*3;
+                    }else{
+                        gold += mele*3 + range *3 + canon*2.25;
+                    }
+                if (j == 2) {
+                    if(i < 29){
+                        gold += mele*3 + range *3;
+                    }else{
+                        gold += mele*3 + range*3 + xcanon;
+                    }
+                }
+                if (j == 0) {
+                    gold += mele*3 + range*3 + xcanon;
+                }   
+            }
+        }
+        System.out.println(gold + " PO generé en " + Math.floor(x/60) + "min " + x%60 + "sec");
     }
-
 }
